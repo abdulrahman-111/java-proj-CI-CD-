@@ -16,7 +16,6 @@ pipeline{
         steps {
                 sh '''
                     echo hi JAVA_HOME=$JAVA_HOME
-                    export PATH=$JAVA_HOME/bin:$PATH
                 '''
             }
         }
