@@ -12,6 +12,13 @@ pipeline{
 // it will go and fetch the repo as all 
 
     stages{
+         stage('Check Java') {
+            steps {
+                sh 'java -version'
+                sh 'echo $JAVA_HOME'
+            }
+        }
+    
         stage("Build the app "){
             // sh allow us to run command 
             steps{
