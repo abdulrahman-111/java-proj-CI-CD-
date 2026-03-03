@@ -24,7 +24,7 @@ pipeline{
         stage("Build the app "){
             // sh allow us to run command 
             steps{
-                
+           sh "java --version"     
            sh "mvn clean package -DskipTests"
                      }
         }
