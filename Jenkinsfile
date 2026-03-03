@@ -4,7 +4,7 @@ pipeline{
     }
     tools{
         maven "maven-3-5-4"
-        jdk "jdk-11"
+        jdk "jdkfix-11"
     }
 
 // 1st stage is to fetch code - but in our case it 
