@@ -40,12 +40,12 @@ pipeline{
             sh "docker build -t java-app:v${BUILD_NUMBER} ."
         }
         }
-        stage("push the image "){
-            steps{
-            sh "docker login -u  -p " // using secret files 
-            sh "docker push docker.io/abdulrahman011/java-app:v${BUILD_NUMBER}"
-        }
-        }
+        // stage("push the image "){
+        //     steps{
+        //   //  sh "docker login -u  -p " // using secret files 
+        //    // sh "docker push docker.io/abdulrahman011/java-app:v${BUILD_NUMBER}"
+        // }
+        // }
 
 
     }
