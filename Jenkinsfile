@@ -15,7 +15,7 @@ pipeline{
          stage('Check Java') {
         steps {
                 sh '''
-                    echo JAVA_HOME=$JAVA_HOME
+                    echo hi JAVA_HOME=$JAVA_HOME
                     export PATH=$JAVA_HOME/bin:$PATH
                 '''
             }
