@@ -14,15 +14,21 @@ pipeline{
     stages{
         stage("Build the app "){
             // sh allow us to run command 
-            sh "mvn package install -DskipTests"
+            steps{
+                sh "mvn package install -DskipTests"
+        }
         }
 
         stage("test the app "){ 
+            steps{
             sh "mvn  test"
+        }
         }
 
         stage("Build the image "){
+            steps{
             sh "docker build -t java-app:v1 ."
+        }
         }
 
     }
