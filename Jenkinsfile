@@ -17,8 +17,6 @@ pipeline{
                 sh '''
                     echo JAVA_HOME=$JAVA_HOME
                     export PATH=$JAVA_HOME/bin:$PATH
-                    which java
-                    java -version
                 '''
             }
         }
@@ -27,10 +25,8 @@ pipeline{
             // sh allow us to run command 
             steps{
                 
-  sh '''
-                    export PATH=$JAVA_HOME/bin:$PATH
-                    mvn clean package -DskipTests
-                '''        }
+           sh "mvn clean package -DskipTests"
+                     }
         }
 
         stage("test the app "){ 
