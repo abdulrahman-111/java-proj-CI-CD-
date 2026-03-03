@@ -13,17 +13,24 @@ pipeline{
 
     stages{
          stage('Check Java') {
-            steps {
-                sh 'java -version'
-                sh 'echo $JAVA_HOME'
+        steps {
+                sh '''
+                    echo JAVA_HOME=$JAVA_HOME
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    which java
+                    java -version
+                '''
             }
         }
     
         stage("Build the app "){
             // sh allow us to run command 
             steps{
-                sh "mvn package install -DskipTests"
-        }
+                
+  sh '''
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    mvn clean package -DskipTests
+                '''        }
         }
 
         stage("test the app "){ 
