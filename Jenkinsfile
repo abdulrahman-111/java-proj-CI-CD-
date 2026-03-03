@@ -21,13 +21,17 @@ pipeline{
             }
         }
     
-        stage("Build the app "){
-            // sh allow us to run command 
-            steps{
-           sh "java --version"     
-           sh "mvn clean package -DskipTests"
-                     }
+stage('Build the app') {
+    steps {
+        withEnv([
+            'JAVA_HOME=/home/jenkins/tools/hudson.model.JDK/jdk-11/jdk11.0.0.2',
+            'PATH=/home/jenkins/tools/hudson.model.JDK/jdk-11/jdk11.0.0.2/bin:' + env.PATH
+        ]) {
+            sh 'java --version'    // just to verify
+            sh 'mvn clean package -DskipTests'
         }
+    }
+}
 
         stage("test the app "){ 
             steps{
