@@ -1,4 +1,4 @@
-pipline{
+pipeline{
     agent{
             label "agent01"
     }
@@ -22,7 +22,7 @@ pipline{
         }
 
         stage("Build the image "){
-            sh "mvn package install -DskipTests"
+            sh "docker build -t java-app:v1 ."
         }
 
     }
