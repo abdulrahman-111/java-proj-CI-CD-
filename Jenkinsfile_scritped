@@ -1,0 +1,37 @@
+node("agent01"){
+def jdk_java_path = tool name: 'jdk-11', type: 'jdk' // tool is function return the path of intallation or binaries
+def mvn_java_path= tool name: 'maven-3-5-4', type: 'maven'
+
+// we need to check out the code -> not like the declaritive 
+
+    stage("checkout SCM"){
+        sh "echo not now "
+    }
+    stage('Build the app') {
+        sh "echo ${DEPI}" 
+        sh 'mvn clean package -DskipTests'
+    }
+    stage("test the app "){ 
+        sh "mvn  test"
+        
+    }
+
+    stage("Build the image "){
+       
+        sh "docker build -t abdulrahman011/java-app:v${BUILD_NUMBER}   ."
+        
+    }
+    stage("push the image "){
+        
+            // withCredentials([string(credentialsId: 'DOCKER_PASS', variable: 'DOCKER_PASS'), string(credentialsId: 'DOCKER_USERNAME', variable: 'DOCKER_USERNAME')]) {
+            //     sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
+            //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
+
+            // }
+
+        sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
+        sh "docker push abdulrahman011/java-app:v${BUILD_NUMBER}"
+    }
+
+
+}
