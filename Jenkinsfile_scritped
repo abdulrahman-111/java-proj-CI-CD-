@@ -4,7 +4,7 @@ def mvn_java_path= tool name: 'maven-3-5-4', type: 'maven'
 
 env.PATH= "${mvn_java_path}/bin:${jdk_java_path}:${env.PATH}"
 
-def
+
 
 // we need to check out the code -> not like the declaritive 
 
