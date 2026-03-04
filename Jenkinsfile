@@ -33,7 +33,7 @@ pipeline{
 
     stage("Build the image "){
         steps{
-            sh "docker build -t docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}   ."
+            sh "docker build -t ${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}   ."
         }
     }
     stage("push the image "){
@@ -45,7 +45,7 @@ pipeline{
             // }
 
             sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-            sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
+            sh "docker push ${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
 
         }
     }
