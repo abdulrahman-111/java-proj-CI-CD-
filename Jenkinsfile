@@ -56,7 +56,7 @@ steps{
             script{
                 def dcoker_func = new io.depi.docker() // create objec of class
                 dcoker_func.login_docker("$DOCKER_USERNAME","$DOCKER_PASS")
-                dcoker_func.push("bdulrahman011/java-app","v${BUILD_NUMBER}")
+                dcoker_func.push("abdulrahman011/java-app","v${BUILD_NUMBER}")
            }    
 
     }
