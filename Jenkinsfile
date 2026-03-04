@@ -1,4 +1,4 @@
-@Libirary("DEPI")_
+@Library("DEPI")_
 
 
 
