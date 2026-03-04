@@ -36,18 +36,31 @@ pipeline{
             sh "docker build -t abdulrahman011/java-app:v${BUILD_NUMBER}   ."
         }
     }
-    stage("push the image "){
+    // stage("push the image "){
+    //     steps{
+    //         // withCredentials([string(credentialsId: 'DOCKER_PASS', variable: 'DOCKER_PASS'), string(credentialsId: 'DOCKER_USERNAME', variable: 'DOCKER_USERNAME')]) {
+    //         //     sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
+    //         //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
+
+    //         // }
+
+    //         sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
+    //         sh "docker push abdulrahman011/java-app:v${BUILD_NUMBER}"
+
+    //     }
+
+    // we dploy on another server 2 method -> using ssh or using specific agent 
+    stage("deploy the image "){
+        // agent{
+        //     label 
+        // }
+
         steps{
-            // withCredentials([string(credentialsId: 'DOCKER_PASS', variable: 'DOCKER_PASS'), string(credentialsId: 'DOCKER_USERNAME', variable: 'DOCKER_USERNAME')]) {
-            //     sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-            //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
-
-            // }
-
-            sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-            sh "docker push abdulrahman011/java-app:v${BUILD_NUMBER}"
+            sh "docker run -d -p 8090:8090   --name depi  abdulrahman011/java-app:v${BUILD_NUMBER}"
+         // sh "ssh user@ip docker run -d -p 8090:8090   --name depi  abdulrahman011/java-app:v${BUILD_NUMBER}   "
 
         }
+    }
     }
 
 

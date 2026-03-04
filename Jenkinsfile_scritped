@@ -11,9 +11,11 @@ env.PATH= "${mvn_java_path}/bin:${jdk_java_path}:${env.PATH}"
     stage("checkout SCM"){
         git branch: 'main', url: 'https://github.com/abdulrahman-111/java-proj-CI-CD-'
     }
+    
     stage('Build the app') {
         sh 'mvn clean package -DskipTests'
     }
+
     stage("test the app "){ 
         sh "mvn  test"
         
