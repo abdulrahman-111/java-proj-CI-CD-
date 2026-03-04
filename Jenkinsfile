@@ -33,7 +33,7 @@ pipeline{
 
     stage("Build the image "){
         steps{
-            sh "docker build -t ${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}   ."
+            sh "docker build -t abdulrahman011/java-app:v${BUILD_NUMBER}   ."
         }
     }
     stage("push the image "){
