@@ -45,7 +45,7 @@ pipeline{
             // }
 
             sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-            sh "docker push ${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
+            sh "docker push abdulrahman011/java-app:v${BUILD_NUMBER}"
 
         }
     }
