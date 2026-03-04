@@ -33,7 +33,7 @@ pipeline{
 
     stage("Build the image "){
         steps{
-            sh "docker build -t java-app:v${BUILD_NUMBER} ."
+            sh "docker build -t docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}   ."
         }
     }
     stage("push the image "){
