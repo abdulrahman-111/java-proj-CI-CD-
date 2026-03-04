@@ -1,3 +1,7 @@
+@libirary("DEPI")_
+
+
+
 pipeline{
     agent{
             label "agent01"
@@ -9,64 +13,57 @@ pipeline{
     environment {
         DOCKER_USERNAME = credentials("DOCKER_USERNAME")
         DOCKER_PASS = credentials("DOCKER_PASS")
-        DEPi ="round 4 "
+    
     }
 
-// 1st stage is to fetch code - but in our case it 
-// is declaritive pipeline and jenkinsfile is on githb
-// it will go and fetch the repo as all 
 
     stages{
     
     stage('Build the app') {
         steps {
-            sh "echo ${DEPI}" 
-            sh 'mvn clean package -DskipTests'
+           script{
+                def maven_func = new io.depi.maven() // create objec of class
+                maven_func.javaBuild("-DskipTests")
+           }
         }
     }
 
     stage("test the app "){ 
         steps{
-            sh "mvn  test"
-        }
+        script{
+                def maven_func = new io.depi.maven() // create objec of class
+                maven_func.javatest("")
+           }
+    }
     }
 
     stage("Build the image "){
         steps{
-            sh "docker build -t abdulrahman011/java-app:v${BUILD_NUMBER}   ."
-        }
+        script{
+                def dcoker_func = new io.depi.docker() // create objec of class
+                dcoker_func.build("abdulrahman011/java-app","v${BUILD_NUMBER}")
+           }
     }
-    // stage("push the image "){
-    //     steps{
-    //         // withCredentials([string(credentialsId: 'DOCKER_PASS', variable: 'DOCKER_PASS'), string(credentialsId: 'DOCKER_USERNAME', variable: 'DOCKER_USERNAME')]) {
-    //         //     sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-    //         //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
+    }
+    stage("push the image "){
+        
+            //  withCredentials([string(credentialsId: 'DOCKER_PASS', variable: 'DOCKER_PASS'), string(credentialsId: 'DOCKER_USERNAME', variable: 'DOCKER_USERNAME')]) {
+            //     sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
+            //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
 
-    //         // }
+            // }
+steps{
+            script{
+                def dcoker_func = new io.depi.docker() // create objec of class
+                dcoker_func.login("$DOCKER_USERNAME","$DOCKER_PASS")
+                dcoker_func.push("bdulrahman011/java-app","v${BUILD_NUMBER}")
+           }    
 
-    //         sh "docker login -u $DOCKER_USERNAME -p  $DOCKER_PASS " // using secret files 
-    //         sh "docker push abdulrahman011/java-app:v${BUILD_NUMBER}"
-
-    //     }
-
-    // we dploy on another server 2 method -> using ssh or using specific agent 
-    stage("deploy the image "){
-        // agent{
-        //     label 
-        // }
-
-        steps{
-            sh "docker run -d -p 8090:8090   --name depi  abdulrahman011/java-app:v${BUILD_NUMBER}"
-         // sh "ssh user@ip docker run -d -p 8090:8090   --name depi  abdulrahman011/java-app:v${BUILD_NUMBER}   "
-
-        }
     }
     }
 
+}
 
 
 
-    }
-
-
-
+}
