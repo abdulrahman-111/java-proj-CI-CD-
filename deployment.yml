@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-app-depoy-jenkins
+  name: java-jenkins-deploy
   labels:
-    app: java-deploy-jenkins
+    app: java-jenkins
 spec:
   replicas: 1
   selector:
