@@ -4,22 +4,22 @@ kind: Deployment
 metadata:
   name: java-app-depoy-jenkins
   labels:
-    app: java-deploy
+    app: java-deploy-jenkins
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: java
-      type: cd
+      app: java-jenk
+      type: cd-jenk
   template:
     metadata:
-      name: java-pods
+      name: java-pods-jenkins
       labels:
-        app: java
-        type: cd
+        app: java-jenk
+        type: cd-jenk
     spec:
       containers:
-      - name: java-container
+      - name: java-container-jenkins
         image: abdulrahman011/java-app:v32
         ports:
         - containerPort: 8090
@@ -29,15 +29,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-svc
+  name: java-svc-jenkins
   labels:
-    name: java-svc
+    name: java-svc-jenkins
 spec:
   type: NodePort
   ports:
     - targetPort: 8090
       port: 8090
-      nodePort: 30008
+      nodePort: 30009
   selector:
-    app: java
-    type: cd
+    app: java-jenk
+    type: cd-jenk
