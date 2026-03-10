@@ -67,9 +67,10 @@ pipeline{
                 // install all the content not as dir for the repo and replace all files in the place of CI 
                 // so we create dir and cd to it  before git plugin -> so our CD files in separate Dir 
                 sh """
+                    echo "before if"
                     // this will handle 
                     if [ -d "java-cd" ]; then cd java-cd && git pull ; else git clone git@github.com:abdulrahman-111/java-cd.git && cd java-cd ; fi 
-
+echo "after if"
                     cd java-UI
                     sed -i "s#.*image: .*#        image: abdulrahman011/java-app:v${BUILD_NUMBER}#g" deployment.yml
                     git config user.email "abdulrahman@gmail.com"
