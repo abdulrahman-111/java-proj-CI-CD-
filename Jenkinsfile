@@ -68,7 +68,7 @@ pipeline{
                 // so we create dir and cd to it  before git plugin -> so our CD files in separate Dir 
                 sh """
                     // this will handle 
-                    if [ -d "java-cd" ]; then cd java-cd && git pull ; else git clone it@github.com:abdulrahman-111/java-cd.git && cd java-cd ; fi 
+                    if [ -d "java-cd" ]; then cd java-cd && git pull ; else git clone git@github.com:abdulrahman-111/java-cd.git && cd java-cd ; fi 
 
                     cd java-UI
                     sed -i "s#.*image: .*#        image: abdulrahman011/java-app:v${BUILD_NUMBER}#g" deployment.yml
@@ -76,7 +76,7 @@ pipeline{
                     git config user.name "boda"
                     git add .
                     git commit -m "change imaege to verison ${BUILD_NUMBER} by jenkins"
-                    git push 
+                    git push origin main
                 """
                 
             }
