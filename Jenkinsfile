@@ -13,7 +13,6 @@ pipeline{
     environment {
         DOCKER_USERNAME = credentials("DOCKER_USERNAME")
         DOCKER_PASS = credentials("DOCKER_PASS")
-    
     }
 
 
@@ -52,15 +51,28 @@ pipeline{
             //     sh "docker push docker.io/${DOCKER_USERNAME}/java-app:v${BUILD_NUMBER}"
 
             // }
-steps{
+    steps{
             script{
                 def dcoker_func = new io.depi.docker() // create objec of class
                 dcoker_func.login_docker("$DOCKER_USERNAME","$DOCKER_PASS")
                 dcoker_func.push("abdulrahman011/java-app","v${BUILD_NUMBER}")
            }    
+    }
+    }
+        stage("deploy with k8s"){
+        steps{
+            
+            sh """
+                sed -i "s#.*image#        image: abdulrahman011/java-app:v${BUILD_NUMBER} "
+                scp   deployment.yml jenkins@192.168.163.136:/home/jenkins/deployjenkins.yml 
+                ssh jenkins@192.168.163.136   "kubectl apply -f /home/jenkins/deployjenkins.yml "
 
+            """
+
+
+        }
     }
-    }
+
 
 }
 
