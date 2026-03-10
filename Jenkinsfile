@@ -61,15 +61,24 @@ pipeline{
         }
         stage("deploy with k8s"){
             steps{
-                
+                //sh "cd java-cd"
+                // we use the plugin as if the repo already cloned -> we need to pull it 
+                // git branch: 'main', url: 'git@github.com:abdulrahman-111/java-cd.git'
+                // install all the content not as dir for the repo and replace all files in the place of CI 
+                // so we create dir and cd to it  before git plugin -> so our CD files in separate Dir 
                 sh """
+                    // this will handle 
+                    if [ -d "java-cd" ]; then cd java-cd && git pull ; else git clone it@github.com:abdulrahman-111/java-cd.git && cd java-cd ; fi 
+
+                    cd java-UI
                     sed -i "s#.*image: .*#        image: abdulrahman011/java-app:v${BUILD_NUMBER}#g" deployment.yml
-                    scp   deployment.yml jenkins@192.168.163.136:/home/jenkins/deployjenkins.yml 
-                    ssh jenkins@192.168.163.136   "kubectl apply -f /home/jenkins/deployjenkins.yml "
-                    
+                    git config user.email "abdulrahman@gmail.com"
+                    git config user.name "boda"
+                    git add .
+                    git commit -m "change imaege to verison ${BUILD_NUMBER} by jenkins"
+                    git push 
                 """
-
-
+                
             }
         }
     }
